@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: boardpjt
+  # profile -> dev, prod
+  profiles:
+    active: dev
+  # 디폴트는 노출을 해놓고, dev는 감춰놓을 정보들을 작성

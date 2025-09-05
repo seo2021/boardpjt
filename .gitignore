@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# dev 관련 노출되는 파일 Git에 업로드 되지 않게
+# application-dev.yml
+*-dev.*
