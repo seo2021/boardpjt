@@ -1,6 +1,8 @@
 package com.example.boardpjt.config;
 
 import com.example.boardpjt.filter.JwtFilter;
+import com.example.boardpjt.filter.RefreshTokenReissueFilter;
+import com.example.boardpjt.model.repository.RefreshTokenRepository;
 import com.example.boardpjt.service.CustomUserDetailsService;
 import com.example.boardpjt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     // 1. Security Filter Chain
     @Bean // 의존성 주입에서 꺼내쓸 수 있게 컨테이너에 등록
@@ -48,6 +51,8 @@ public class SecurityConfig {
                 e.authenticationEntryPoint((req, res, ex) ->
                         res.sendRedirect("/auth/login")));
         // 필터추가
+        http.addFilterBefore(new RefreshTokenReissueFilter(jwtUtil, userDetailsService, refreshTokenRepository),
+                UsernamePasswordAuthenticationFilter.class); // AccessToken 검증 전에...
         http.addFilterBefore(new JwtFilter(jwtUtil, userDetailsService),
                 UsernamePasswordAuthenticationFilter.class);
 
