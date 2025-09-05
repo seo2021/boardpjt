@@ -69,7 +69,7 @@ public class AuthController {
 
             // JWT 발급 -> 쿠키 로 저장
             String accessToken = jwtUtil.generateToken(username, authentication.getAuthorities().toString(), false);
-            ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+            ResponseCookie cookie = ResponseCookie.from("access_token", accessToken)
                     .httpOnly(true)
                     .path("/")
                     .maxAge(3600) // s, ms(x)
