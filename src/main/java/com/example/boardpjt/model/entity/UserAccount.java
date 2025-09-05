@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 // 기본 생성자
+// @Table -> 필수는 아님. 테이블명을 바꿔주고 싶다던가...
 public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // MYSQL의 AUTO_INCREMENT
