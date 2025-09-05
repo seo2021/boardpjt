@@ -76,6 +76,16 @@ public class AuthController {
                     .build();
             // "Set-Cookie"
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+            // RefreshToken
+            String refreshToken = jwtUtil.generateToken(username, authentication.getAuthorities().toString(), true);
+            ResponseCookie refreshCookie = ResponseCookie.from("refresh_cookie", refreshToken)
+                    .httpOnly(true)
+                    .path("/")
+                    .maxAge(3600 * 24) // s, ms(x)
+                    .build();
+            // "Set-Cookie"
+            response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
             // 마이페이지로 이동
             return "redirect:/my-page";
         } catch (Exception e) {
