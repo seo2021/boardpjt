@@ -1,5 +1,6 @@
 package com.example.boardpjt.filter;
 
+import com.example.boardpjt.util.CookieUtil;
 import com.example.boardpjt.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -48,18 +49,19 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         // === 1단계: 쿠키에서 JWT 토큰 추출 ===
-        String token = null;
-
-        // 요청에 쿠키가 있는지 확인
-        if (request.getCookies() != null) {
-            // 모든 쿠키를 순회하면서 "access_token" 이름의 쿠키 찾기
-            for (Cookie c : request.getCookies()) {
-                if (c.getName().equals("access_token")) {
-                    token = c.getValue(); // JWT 토큰 값 추출
-                    break; // 토큰을 찾았으므로 반복 종료
-                }
-            }
-        }
+        String token = CookieUtil.findCookie(request, "access_token");
+//        String token = null;
+//
+//        // 요청에 쿠키가 있는지 확인
+//        if (request.getCookies() != null) {
+//            // 모든 쿠키를 순회하면서 "access_token" 이름의 쿠키 찾기
+//            for (Cookie c : request.getCookies()) {
+//                if (c.getName().equals("access_token")) {
+//                    token = c.getValue(); // JWT 토큰 값 추출
+//                    break; // 토큰을 찾았으므로 반복 종료
+//                }
+//            }
+//        }
 
         // 디버깅용 로그 출력 (운영환경에서는 제거 권장)
         System.out.println("token = " + token);

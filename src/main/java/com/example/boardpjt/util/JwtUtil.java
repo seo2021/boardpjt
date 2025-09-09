@@ -1,6 +1,7 @@
 package com.example.boardpjt.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -156,7 +157,9 @@ public class JwtUtil {
             // 파싱 성공 = 토큰이 유효함 (형식, 서명, 만료시간 모두 정상)
             getClaims(token);
             return true;
-
+        } catch (ExpiredJwtException e) {
+            throw e;
+            // validate를 쓰고 싶으면 시간만료에 대해서는 다시금 상위처리를 하게...
         } catch (Exception e) {
             // === 가능한 예외 종류들 ===
             // 1. MalformedJwtException: 잘못된 JWT 형식

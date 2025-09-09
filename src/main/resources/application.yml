@@ -78,8 +78,8 @@ spring:
 #     org.hibernate.type.descriptor.sql.BasicBinder: TRACE # 바인딩 파라미터
 
 # === 서버 설정 (예시) ===
-# server:
-#   port: ${SERVER_PORT:8080}              # 서버 포트 (환경변수 우선)
+server:
+   port: 8080              # 서버 포트 (환경변수 우선)
 #   servlet:
 #     context-path: /api                   # 컨텍스트 패스
 #   compression:

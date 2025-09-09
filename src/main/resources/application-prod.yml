@@ -1,0 +1,28 @@
+# JPA, MySQL
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+      port: ${REDIS_PORT}
+      ssl:
+        enabled: true
+  datasource:
+    # https://console.aiven.io/
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+# JWT
+jwt:
+  # https://jwtsecrets.com/
+  secret: ${JWT_SECRET}
+  expiry:
+    access: 60000
+    # 1분 = 60 * 1000 (ms)
+    #    access: 3600000    # 1시간 (ms)
+    refresh: 86400000
+    # 1일 (ms)

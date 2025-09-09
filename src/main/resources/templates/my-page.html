@@ -39,6 +39,12 @@
     - 실제 출력: "&lt;script&gt;alert('xss')&lt;/script&gt;님 반갑습니다!"
     -->
     <span th:text="${username}"></span>님 반갑습니다!
+    <p>
+        당신은 <span th:text="${role}"></span>입니다!
+    </p>
+    <a th:if="${role == 'ROLE_ADMIN'}" th:href="@{/admin}">관리자 페이지로 이동</a>
+    <a th:href="@{/}">메인 페이지로 이동</a>
+    <form th:action="@{/auth/logout}" method="post"><button>로그아웃</button></form>
 </section>
 </body>
 </html>

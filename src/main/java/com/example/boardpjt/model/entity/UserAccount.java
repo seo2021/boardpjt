@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 사용자 계정 정보를 저장하는 JPA 엔티티 클래스
  * 데이터베이스의 user_account 테이블과 매핑되며, 사용자 인증 및 권한 관리에 사용
@@ -63,4 +66,43 @@ public class UserAccount {
     // - "ROLE_MODERATOR": 중간 관리자 권한
     // 주의: Spring Security는 역할명이 "ROLE_" 접두사로 시작하는 것을 권장
     private String role;
+
+    // 내가 팔로우한 사람들 (following)
+    @ManyToMany // 중개테이블/엔티티 -> 구현. / ManyToMany
+    @JoinTable(
+            name = "user_follow", // 중간에 생길 가상의 테이블
+            joinColumns = @JoinColumn(name = "follower_id"),
+            // 현재 엔티티가 '팔로우를 건 사람' -> 현재 엔티티의 id를 follower_id라는 의미로 user_follower에 저장
+            inverseJoinColumns = @JoinColumn(name = "following_id")
+            // 상대방 엔티티가 팔로루르 당한 사람(following_id)
+    )
+    // 1 user -> 3 user. follower_id 1 / following_id 3
+    private Set<UserAccount> following = new HashSet<>();
+
+    // 나를 팔로우한 사람들 (followers)
+    @ManyToMany(mappedBy = "following")
+    private Set<UserAccount> followers = new HashSet<>();
+
+    // 1. 서로 팔로우를 안한 경우
+    // 2. 한쪽만 팔로우를 한 경우
+    // 3. 서로 맞팔로우한 경우
+
+    public void follow(UserAccount target) {
+        // 이 엔티티가 target 팔로우 (follower_id) -> (target. following_id)
+        following.add(target);
+        target.followers.add(this); // this 현재 엔티티로 만들어진 인스턴스 자체
+    }
+
+    public void unfollow(UserAccount target) {
+        following.remove(target);
+        target.followers.remove(this);
+    }
+
+    public int getFollowerCount() {
+        return followers.size();
+    }
+
+    public int getFollowingCount() {
+        return following.size();
+    }
 }

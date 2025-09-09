@@ -1,6 +1,8 @@
 package com.example.boardpjt.config;
 
 import com.example.boardpjt.filter.JwtFilter;
+import com.example.boardpjt.filter.RefreshJwtFilter;
+import com.example.boardpjt.model.repository.RefreshTokenRepository;
 import com.example.boardpjt.service.CustomUserDetailsService;
 import com.example.boardpjt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -54,9 +56,13 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         // 홈페이지("/")와 인증 관련 경로("/auth/**")는 모든 사용자 접근 허용
                         .requestMatchers("/", "/auth/**").permitAll()
+                        // auth/** -> 패턴 등록 -> auth/register 별도로 했다면, auth/logout
 
                         // "/my-page" 경로는 인증된 사용자만 접근 가능
                         .requestMatchers("/my-page").authenticated()
+
+                        // ROLE_ADMIN, ROLE_USER -> (ROLE_) ...
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         // 그 외 모든 요청은 인증 필요
                         .anyRequest().authenticated()
@@ -71,12 +77,16 @@ public class SecurityConfig {
         // === JWT 필터 추가 ===
         // JwtFilter를 UsernamePasswordAuthenticationFilter 앞에 추가
         // 모든 HTTP 요청이 JWT 필터를 먼저 거치도록 설정
-        http.addFilterBefore(new JwtFilter(jwtUtil, userDetailsService),
-                UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new JwtFilter(jwtUtil, userDetailsService),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new RefreshJwtFilter(jwtUtil, userDetailsService, refreshTokenRepository), JwtFilter.class);
 
         // 설정이 완료된 SecurityFilterChain 반환
         return http.build();
     }
+
+    private final RefreshTokenRepository refreshTokenRepository;
 
     /**
      * 비밀번호 인코더 빈 등록

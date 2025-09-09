@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 사용자 계정 관련 비즈니스 로직을 처리하는 서비스 클래스
  * 회원가입, 사용자 정보 관리 등의 핵심 기능을 담당
@@ -106,4 +108,21 @@ public class UserAccountService {
     // 5. 비밀번호 변경 메서드:
     //    @Transactional
     //    public void changePassword(String username, String oldPassword, String newPassword) { ... }
+
+    // 유저 전체를 조회하는 메서드
+    @Transactional(readOnly = true)
+    public List<UserAccount> findAllUsers() {
+        return userAccountRepository.findAll();
+    }
+
+    // 유저를 탈퇴(삭제) 메서드
+    @Transactional
+    public void deleteUser(Long id) {
+        userAccountRepository.deleteById(id);
+    }
+
+    public UserAccount findByUsername(String name) {
+        return userAccountRepository.findByUsername(name)
+                .orElseThrow();
+    }
 }
