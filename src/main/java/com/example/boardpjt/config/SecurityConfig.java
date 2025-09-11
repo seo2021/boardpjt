@@ -57,6 +57,7 @@ public class SecurityConfig {
                         // 홈페이지("/")와 인증 관련 경로("/auth/**")는 모든 사용자 접근 허용
                         .requestMatchers("/", "/auth/**").permitAll()
                         // auth/** -> 패턴 등록 -> auth/register 별도로 했다면, auth/logout
+                        .requestMatchers("/css/**", "/js/**").permitAll()
 
                         // "/my-page" 경로는 인증된 사용자만 접근 가능
                         .requestMatchers("/my-page").authenticated()
