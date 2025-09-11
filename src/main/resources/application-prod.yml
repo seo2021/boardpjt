@@ -21,8 +21,8 @@ jwt:
   # https://jwtsecrets.com/
   secret: ${JWT_SECRET}
   expiry:
-    access: 60000
+    # access: 60000
     # 1분 = 60 * 1000 (ms)
-    #    access: 3600000    # 1시간 (ms)
+    access: 3600000    # 1시간 (ms)
     refresh: 86400000
     # 1일 (ms)

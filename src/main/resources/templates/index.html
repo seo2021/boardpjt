@@ -1,106 +1,117 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- 문서 인코딩 설정: UTF-8로 한글 등 유니코드 문자 지원 -->
     <meta charset="UTF-8">
-
-    <!-- 반응형 웹 설정: 모바일 기기에서의 화면 표시 최적화 -->
-    <!-- width=device-width: 화면 폭을 기기 폭에 맞춤 -->
-    <!-- user-scalable=no: 사용자 확대/축소 비활성화 -->
-    <!-- initial-scale=1.0: 초기 확대 비율 100% -->
-    <!-- maximum-scale=1.0, minimum-scale=1.0: 최대/최소 확대 비율 고정 -->
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-    <!-- Internet Explorer 호환성 설정: 최신 렌더링 엔진(Edge) 사용 -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <!-- 페이지 제목: 브라우저 탭에 표시되는 텍스트 -->
-    <title>게시판 프로젝트</title>
+    <title>StudyLog - 나만의 학습 기록</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<!-- 메인 제목: 페이지의 주요 헤딩 -->
-<h1>게시판 프로젝트</h1>
+<!-- 헤더 -->
+<header class="header">
+    <div class="nav-container">
+        <a th:href="@{/}" class="logo">
+            <i class="fas fa-book-open"></i>
+            StudyLog
+        </a>
 
-<!--
-네비게이션 링크들: Thymeleaf 템플릿 엔진을 사용한 URL 생성
-th:href="@{...}" : Thymeleaf의 URL 표현식
-- 컨텍스트 패스를 자동으로 추가
-- URL 인코딩 자동 처리
-- 절대 경로로 변환하여 안전한 링크 생성
--->
+        <nav class="nav-links">
+            <a th:href="@{/posts}" class="nav-link">학습 기록</a>
+            <a th:href="@{/auth/register}" class="nav-link">회원가입</a>
+            <a th:href="@{/auth/login}" class="nav-link primary">로그인</a>
+            <a th:href="@{/my-page}" class="nav-link">마이페이지</a>
+        </nav>
+    </div>
+</header>
 
-<!-- 회원가입 링크 -->
-<!-- @{/auth/register} → http://localhost:8080/auth/register (예시) -->
-<a th:href="@{/auth/register}">회원가입하기</a>
+<!-- 메인 컨텐츠 -->
+<main class="main-content">
+    <section class="hero-section">
+        <h1 class="hero-title">나만의 학습 여정을<br>기록하세요</h1>
+        <p class="hero-subtitle">매일의 공부를 체계적으로 기록하고, 꾸준한 성장을 추적해보세요</p>
 
-<!-- 로그인 링크 -->
-<!-- @{/auth/login} → http://localhost:8080/auth/login (예시) -->
-<a th:href="@{/auth/login}">로그인하기</a>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-pencil-alt feature-icon"></i>
+                <h3 class="feature-title">체계적 기록</h3>
+                <p class="feature-desc">오늘 공부한 내용을 상세히 기록하고 정리하여 지식을 체계화하세요</p>
+            </div>
 
-<!-- 마이페이지 링크 -->
-<!-- 주의: 실제 컨트롤러 매핑은 /my-page 이므로 올바른 경로는 @{/my-page} -->
-<!-- 현재 코드의 /auth/my-page는 404 오류를 발생시킬 수 있음 -->
-<a th:href="@{/auth/my-page}">마이페이지</a>
+            <div class="feature-card">
+                <i class="fas fa-users feature-icon"></i>
+                <h3 class="feature-title">학습 공유</h3>
+                <p class="feature-desc">동료들과 학습 경험을 공유하며 서로 동기부여를 받아보세요</p>
+            </div>
 
-<a th:href="@{/posts}">게시글 목록</a>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3 class="feature-title">성장 분석</h3>
+                <p class="feature-desc">학습 패턴을 분석하고 지속적인 성장을 위한 인사이트를 얻으세요</p>
+            </div>
+        </div>
 
-<!--
-=== Thymeleaf URL 표현식의 장점 ===
-1. 컨텍스트 패스 자동 처리: 애플리케이션 배포 경로가 변경되어도 자동 적용
-2. URL 인코딩: 특수문자나 한글이 포함된 URL도 안전하게 처리
-3. 절대 경로 변환: 상대 경로 문제 방지
-4. IDE 지원: 경로 오타나 존재하지 않는 경로 감지 가능
+        <div class="cta-section">
+            <a th:href="@{/posts}" class="cta-button">
+                <i class="fas fa-rocket"></i>
+                지금 시작하기
+            </a>
+        </div>
+    </section>
+</main>
 
-=== 일반 HTML vs Thymeleaf 비교 ===
-일반 HTML: <a href="/auth/register">회원가입하기</a>
-Thymeleaf: <a th:href="@{/auth/register}">회원가입하기</a>
+<!-- 통계 섹션 -->
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <span class="stat-number">1,247</span>
+            <span class="stat-label">등록된 학습 기록</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">328</span>
+            <span class="stat-label">활성 사용자</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">89%</span>
+            <span class="stat-label">목표 달성률</span>
+        </div>
+    </div>
+</section>
 
-=== 권장 개선사항 ===
-1. 올바른 마이페이지 경로 수정: @{/my-page}
-2. CSS 스타일링 추가: Bootstrap이나 커스텀 CSS
-3. 로그인 상태에 따른 조건부 표시:
-   - 로그인 전: 회원가입, 로그인 링크 표시
-   - 로그인 후: 마이페이지, 로그아웃 링크 표시
-4. 네비게이션 메뉴 구조화: <nav> 태그 사용
--->
+<!-- 푸터 -->
+<footer class="footer">
+    <p>&copy; 2025 StudyLog. 함께 성장하는 학습 커뮤니티</p>
+</footer>
+
+<script>
+    // 통계 카운터 애니메이션
+    function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current).toLocaleString();
+        }, 20);
+    }
+
+    // 페이지 로드 시 통계 애니메이션 실행
+    window.addEventListener('load', () => {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const targets = [1247, 328, 89];
+
+        setTimeout(() => {
+            statNumbers.forEach((el, index) => {
+                if (index < targets.length) {
+                    animateCounter(el, targets[index]);
+                }
+            });
+        }, 500);
+    });
+</script>
 </body>
 </html>
-
-<!--
-=== 추가 개선 제안 ===
-
-1. 로그인 상태에 따른 조건부 렌더링:
-<div th:if="${#authentication.name == null}">
-    <a th:href="@{/auth/register}">회원가입하기</a>
-    <a th:href="@{/auth/login}">로그인하기</a>
-</div>
-<div th:if="${#authentication.name != null}">
-    <span th:text="'안녕하세요, ' + ${#authentication.name} + '님'"></span>
-    <a th:href="@{/my-page}">마이페이지</a>
-    <a th:href="@{/auth/logout}">로그아웃</a>
-</div>
-
-2. Bootstrap을 활용한 스타일링:
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="/">게시판 프로젝트</a>
-        ... 네비게이션 링크들 ...
-</div>
-</nav>
-
-3. 의미론적 HTML 구조:
-<header>
-    <nav>
-        <ul>
-            <li><a th:href="@{/auth/register}">회원가입</a></li>
-            <li><a th:href="@{/auth/login}">로그인</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    <h1>게시판 프로젝트</h1>
-    ... 메인 콘텐츠 ...
-</main>
--->
