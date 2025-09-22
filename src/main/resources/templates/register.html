@@ -18,22 +18,7 @@
 </head>
 <body>
     <!-- 헤더 -->
-    <header class="header">
-        <div class="nav-container">
-            <!-- 로고 -->
-            <a href="/" class="logo">
-                <i class="fas fa-book-open"></i>
-                StudyLog
-            </a>
-
-            <!-- 네비게이션 링크 -->
-            <nav class="nav-links">
-                <a href="/" class="nav-link">홈</a>
-                <a href="/auth/login" class="nav-link">로그인</a>
-                <a href="/auth/register" class="nav-link active">회원가입</a>
-            </nav>
-        </div>
-    </header>
+    <div th:replace="~{fragments/header :: header}"></div>
 
     <!-- 메인 콘텐츠 -->
     <main class="main-content">
@@ -154,9 +139,7 @@
     </main>
 
     <!-- 푸터 -->
-    <footer class="footer">
-        <p>&copy; 2025 StudyLog. 함께 성장하는 학습 커뮤니티</p>
-    </footer>
+    <div th:replace="~{fragments/footer :: footer}"></div>
 
     <!-- JavaScript -->
     <script>

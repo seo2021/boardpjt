@@ -1,0 +1,25 @@
+<!-- fragments/header.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- 헤더 프래그먼트 -->
+<header class="header" th:fragment="header">
+    <div class="nav-container">
+        <a th:href="@{/}" class="logo">
+            <i class="fas fa-book-open"></i>
+            StudyLog
+        </a>
+
+        <nav class="nav-links">
+            <a th:href="@{/posts}" class="nav-link">학습 기록</a>
+            <a th:href="@{/auth/register}" class="nav-link">회원가입</a>
+            <a th:href="@{/auth/login}" class="nav-link primary">로그인</a>
+            <a th:href="@{/my-page}" class="nav-link">마이페이지</a>
+        </nav>
+    </div>
+</header>
+</body>
+</html>
