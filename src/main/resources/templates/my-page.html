@@ -1,170 +1,228 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- 문서 인코딩 설정: UTF-8로 한글 등 유니코드 문자 지원 -->
+    <!-- 문서 인코딩 설정 -->
     <meta charset="UTF-8">
-
-    <!-- 반응형 웹 설정: 모바일 기기에서의 화면 표시 최적화 -->
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-    <!-- Internet Explorer 호환성 설정: 최신 렌더링 엔진 사용 -->
+    <!-- 반응형 웹 설정 -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- Internet Explorer 호환성 설정 -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- 페이지 제목: 브라우저 탭에 표시되는 텍스트 -->
-    <title>마이페이지</title>
+    <!-- 페이지 제목 -->
+    <title>StudyLog - 마이페이지</title>
+
+    <!-- 스타일시트 -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Font Awesome 아이콘 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<!-- 페이지 메인 제목 -->
-<h1>마이페이지</h1>
+    <!-- 헤더 -->
+    <div th:replace="~{fragments/header :: header}"></div>
 
-<!-- 사용자 환영 메시지를 포함하는 섹션 -->
-<section>
-    <!--
-    사용자 환영 메시지
-    th:text="${username}": Thymeleaf 텍스트 표현식
-    - MainController에서 Model에 추가된 "username" 속성값을 표시
-    - authentication.getName()으로 얻은 현재 로그인한 사용자명
-    - XSS 공격 방지를 위해 자동으로 HTML 이스케이프 처리
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <div class="mypage-container">
+            <!-- 환영 섹션 -->
+            <div class="welcome-section">
+                <div class="welcome-header">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="welcome-info">
+                        <h1 class="welcome-title">
+                            환영합니다!
+                            <span class="username" th:text="${username ?: '알 수 없는 사용자'}">사용자</span>님
+                        </h1>
+<!--                        <div class="user-role">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="role-text">
+                                당신은
+                                <span class="role-badge" th:text="${role == 'ROLE_ADMIN' ? '관리자' : '일반 사용자'}" th:classappend="${role == 'ROLE_ADMIN' ? 'admin' : 'user'}">
+                                    일반 사용자
+                                </span>
+                                입니다!
+                            </span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
 
-    데이터 흐름:
-    1. JWT 필터에서 토큰 검증 → SecurityContext에 Authentication 저장
-    2. MainController에서 authentication.getName() 호출
-    3. Model에 "username" 속성으로 추가: model.addAttribute("username", authentication.getName())
-    4. Thymeleaf가 ${username}을 실제 사용자명으로 치환하여 렌더링
+            <!-- 대시보드 카드 섹션 -->
+            <div class="dashboard-grid">
+                <!-- 학습 통계 카드 -->
+                <div class="dashboard-card stats-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-line"></i>
+                            학습 통계
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="dashboard-stat-item">
+                            <div class="stat-number">24</div>
+                            <div class="stat-label">작성한 글</div>
+                        </div>
+                        <div class="dashboard-stat-item">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">학습 시간</div>
+                        </div>
+                        <div class="dashboard-stat-item">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">완료한 목표</div>
+                        </div>
+                    </div>
+                </div>
 
-    보안 특징:
-    - th:text는 HTML 태그를 텍스트로 처리하여 XSS 공격 방지
-    - 예: 사용자명이 "<script>alert('xss')</script>"인 경우
-    - 실제 출력: "&lt;script&gt;alert('xss')&lt;/script&gt;님 반갑습니다!"
-    -->
-    <span th:text="${username}"></span>님 반갑습니다!
-    <p>
-        당신은 <span th:text="${role}"></span>입니다!
-    </p>
-    <a th:if="${role == 'ROLE_ADMIN'}" th:href="@{/admin}">관리자 페이지로 이동</a>
-    <a th:href="@{/}">메인 페이지로 이동</a>
-    <form th:action="@{/auth/logout}" method="post"><button>로그아웃</button></form>
-</section>
+                <!-- 최근 활동 카드 -->
+                <div class="dashboard-card activity-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-clock"></i>
+                            최근 활동
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="activity-info">
+                                <div class="activity-title">새 글 작성</div>
+                                <div class="activity-time">2시간 전</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="activity-info">
+                                <div class="activity-title">목표 달성</div>
+                                <div class="activity-time">1일 전</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="activity-info">
+                                <div class="activity-title">댓글 작성</div>
+                                <div class="activity-time">3일 전</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 빠른 액션 카드 -->
+                <div class="dashboard-card actions-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-rocket"></i>
+                            빠른 액션
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="action-grid">
+                            <a href="/posts/new" class="action-btn">
+                                <i class="fas fa-pen"></i>
+                                새 글 작성
+                            </a>
+                            <a href="/posts" class="action-btn">
+                                <i class="fas fa-list"></i>
+                                내 글 보기
+                            </a>
+                            <a href="/profile/edit" class="action-btn">
+                                <i class="fas fa-user-edit"></i>
+                                프로필 수정
+                            </a>
+                            <a href="/settings" class="action-btn">
+                                <i class="fas fa-cog"></i>
+                                설정
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 관리자 전용 섹션 -->
+            <div th:if="${role == 'ROLE_ADMIN'}" class="admin-section">
+                <div class="admin-card">
+                    <div class="card-header admin-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-crown"></i>
+                            관리자 전용 메뉴
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="admin-description">관리자 권한으로 시스템을 관리할 수 있습니다.</p>
+                        <div class="admin-actions">
+                            <a th:href="@{/admin}" class="admin-btn">
+                                <i class="fas fa-tools"></i>
+                                관리자 페이지로 이동
+                            </a>
+                            <a href="/admin/users" class="admin-btn">
+                                <i class="fas fa-users"></i>
+                                사용자 관리
+                            </a>
+                            <a href="/admin/posts" class="admin-btn">
+                                <i class="fas fa-file-alt"></i>
+                                게시글 관리
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 계정 관리 섹션 -->
+            <div class="account-section">
+                <div class="account-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-user-shield"></i>
+                            계정 관리
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="account-actions">
+                            <a th:href="@{/}" class="nav-btn home-btn">
+                                <i class="fas fa-home"></i>
+                                메인 페이지로 이동
+                            </a>
+
+                            <form th:action="@{/auth/logout}" method="post" class="logout-form" id="logoutForm">
+                                <button type="submit" class="nav-btn logout-btn" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    로그아웃
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="account-info">
+                            <div class="info-item">
+                                <span class="info-label">로그인 상태:</span>
+                                <span class="info-value online">온라인</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">마지막 접속:</span>
+                                <span class="info-value">방금 전</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- JavaScript -->
+    <script>
+
+    </script>
+
+
+
 </body>
 </html>
 
-<!--
-=== 인증된 사용자 접근 과정 ===
-
-1. 사용자가 /my-page 접근 시도
-2. SecurityConfig에서 .requestMatchers("/my-page").authenticated() 확인
-3. JwtFilter에서 쿠키의 access_token 검증:
-   - 토큰 존재 여부 확인
-   - 토큰 유효성 검증 (서명, 만료시간 등)
-   - 사용자명 추출하여 UserDetailsService로 사용자 정보 로드
-   - SecurityContext에 Authentication 객체 설정
-4. MainController.myPage() 메서드 실행:
-   - Authentication 객체에서 사용자명 추출
-   - Model에 username 속성 추가
-5. 이 템플릿 렌더링하여 사용자에게 표시
-
-=== 접근 권한 확인 ===
-
-인증되지 않은 사용자 접근 시:
-1. JwtFilter에서 토큰 없음 또는 유효하지 않음 확인
-2. SecurityContext에 Authentication 설정 안 됨
-3. Spring Security가 인증 필요 판단
-4. SecurityConfig의 authenticationEntryPoint 실행
-5. /auth/login으로 리다이렉트
-
-=== 마이페이지 확장 기능 제안 ===
-
-1. 사용자 정보 표시:
-<section>
-    <h2>사용자 정보</h2>
-    <p>사용자명: <span th:text="${username}"></span></p>
-    <p>권한: <span th:text="${#authentication.authorities}"></span></p>
-    <p>로그인 시간: <span th:text="${#authentication.details}"></span></p>
-</section>
-
-2. 로그아웃 기능:
-<section>
-    <h2>계정 관리</h2>
-    <form th:action="@{/auth/logout}" method="post">
-        <button type="submit">로그아웃</button>
-    </form>
-</section>
-
-3. 사용자 권한별 조건부 표시:
-<div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-    <h3>관리자 전용 메뉴</h3>
-    <a th:href="@{/admin}">관리자 페이지</a>
-</div>
-
-4. 프로필 수정 링크:
-<section>
-    <h2>프로필 관리</h2>
-    <a th:href="@{/profile/edit}">프로필 수정</a>
-    <a th:href="@{/profile/change-password}">비밀번호 변경</a>
-</section>
-
-=== CSS 스타일링 예시 ===
-
-<style>
-.welcome-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.welcome-message {
-    font-size: 1.2em;
-    color: #495057;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.user-info {
-    background-color: white;
-    padding: 20px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-}
-
-.btn-logout {
-    background-color: #dc3545;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-</style>
-
-=== 보안 고려사항 ===
-
-1. XSS 방지: th:text 사용으로 HTML 이스케이프 처리
-2. 세션 관리: JWT 토큰 만료 시간 관리
-3. 권한 체크: Spring Security Expression 활용
-4. 로그아웃 기능: 토큰 무효화 처리
-
-=== Thymeleaf Security Integration ===
-
-Spring Security와 Thymeleaf 통합 시 추가 기능:
-- ${#authentication}: 현재 인증 정보 접근
-- ${#authorization}: 권한 체크 표현식
-- th:if="${#authentication.name != null}": 로그인 상태 확인
-
-예시:
-<div th:if="${#authentication.name != null}">
-    <p>로그인된 사용자: <span th:text="${#authentication.name}"></span></p>
-    <p>권한: <span th:text="${#authentication.authorities}"></span></p>
-</div>
-
-=== 에러 처리 ===
-
-만약 username이 null인 경우 대비:
-<span th:text="${username != null ? username : '게스트'}"></span>님 반갑습니다!
-
-또는 기본값 설정:
-<span th:text="${username ?: '알 수 없는 사용자'}"></span>님 반갑습니다!
--->

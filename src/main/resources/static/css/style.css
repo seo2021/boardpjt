@@ -708,6 +708,405 @@ body {
 }
 
 /* ===================
+   마이페이지 스타일
+   =================== */
+.mypage-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+/* 환영 섹션 */
+.welcome-section {
+    background-color: #FFFFFF;
+    border: 3px solid #2C2C2C;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+    box-shadow: 8px 8px 0px #E85A4F;
+}
+
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 30px;
+    height: 30px;
+    background-color: #E85A4F;
+}
+
+.welcome-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.user-avatar {
+    font-size: 4rem;
+    color: #E85A4F;
+    flex-shrink: 0;
+}
+
+.welcome-info {
+    flex: 1;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #2C2C2C;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.username {
+    color: #E85A4F;
+}
+
+.user-role {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.user-role i {
+    color: #E85A4F;
+}
+
+.role-badge {
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.role-badge.admin {
+    background-color: #E85A4F;
+    color: white;
+}
+
+.role-badge.user {
+    background-color: #F5F2E8;
+    color: #2C2C2C;
+    border: 2px solid #2C2C2C;
+}
+
+/* 대시보드 그리드 */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* 대시보드 카드 공통 스타일 */
+.dashboard-card, .admin-card, .account-card {
+    background-color: #FFFFFF;
+    border: 3px solid #2C2C2C;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card::before, .admin-card::before, .account-card::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 20px;
+    height: 20px;
+    background-color: #E85A4F;
+}
+
+.dashboard-card:hover, .admin-card:hover, .account-card:hover {
+    box-shadow: 8px 8px 0px #E85A4F;
+}
+
+.card-header {
+    padding: 2rem 2rem 1rem;
+    border-bottom: 2px solid #F5F2E8;
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2C2C2C;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.card-title i {
+    color: #E85A4F;
+}
+
+.card-content {
+    padding: 2rem;
+}
+
+/* 통계 카드 */
+.stats-card .card-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.dashboard-stat-item {
+    text-align: center;
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #E85A4F;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 600;
+}
+
+/* 활동 카드 */
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #F5F2E8;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #F5F2E8;
+    border: 2px solid #2C2C2C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E85A4F;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: #2C2C2C;
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* 액션 카드 */
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    background-color: #F5F2E8;
+    border: 2px solid #2C2C2C;
+    text-decoration: none;
+    color: #2C2C2C;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn:hover {
+    background-color: #E85A4F;
+    color: white;
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0px #2C2C2C;
+}
+
+.action-btn i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 관리자 섹션 */
+.admin-section {
+    margin-bottom: 3rem;
+}
+
+.admin-header {
+    background: linear-gradient(135deg, #E85A4F, #D73027);
+    color: white;
+    border-bottom: none;
+}
+
+.admin-header .card-title {
+    color: white;
+}
+
+.admin-header .card-title i {
+    color: #FFD700;
+}
+
+.admin-description {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background-color: #E85A4F;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border: 3px solid #2C2C2C;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.admin-btn:hover {
+    background-color: #D73027;
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0px #2C2C2C;
+}
+
+/* 계정 관리 섹션 */
+.account-section {
+    margin-bottom: 2rem;
+}
+
+.account-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 3px solid #2C2C2C;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 1rem;
+    background: none;
+}
+
+.home-btn {
+    background-color: #F5F2E8;
+    color: #2C2C2C;
+}
+
+.home-btn:hover {
+    background-color: #E85A4F;
+    color: white;
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0px #2C2C2C;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border-color: #2C2C2C;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0px #2C2C2C;
+}
+
+.logout-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.logout-form {
+    display: inline;
+}
+
+/* 계정 정보 */
+.account-info {
+    padding-top: 1.5rem;
+    border-top: 2px solid #F5F2E8;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #F5F2E8;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #2C2C2C;
+}
+
+.info-value {
+    color: #666;
+}
+
+.info-value.online {
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* 리플 효과 */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple-effect 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-effect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* ===================
    공통 푸터 스타일
    =================== */
 .footer {
@@ -824,6 +1223,63 @@ body {
     .checkbox-label {
         font-size: 0.85rem;
     }
+
+    /* 마이페이지 반응형 */
+    .mypage-container {
+        padding: 0 1rem;
+    }
+
+    .welcome-section {
+        padding: 2rem;
+        box-shadow: 5px 5px 0px #E85A4F;
+    }
+
+    .welcome-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .card-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+    }
+
+    .stats-card .card-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-actions {
+        flex-direction: column;
+    }
+
+    .account-actions {
+        flex-direction: column;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -831,6 +1287,7 @@ body {
         grid-template-columns: 1fr;
     }
 
+    /* 회원가입 페이지 반응형 */
     .register-container {
         padding: 1.5rem;
         max-width: 350px;
@@ -848,6 +1305,36 @@ body {
     .checkbox-custom {
         width: 18px;
         height: 18px;
+    }
+
+    /* 마이페이지 반응형 */
+    .welcome-section {
+        padding: 1.5rem;
+    }
+
+    .welcome-title {
+        font-size: 1.8rem;
+    }
+
+    .user-avatar {
+        font-size: 3rem;
+    }
+
+    .card-header {
+        padding: 1rem 1rem 0.5rem;
+    }
+
+    .card-content {
+        padding: 1rem;
+    }
+
+    .action-btn {
+        padding: 1rem;
+    }
+
+    .nav-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
     }
 }
 
